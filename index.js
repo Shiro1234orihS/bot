@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder  } = require('discord.js');
 const token = 'MTA4NDE1MTIyNzQ2NzcwNjQxMA.GaS5Kd.AXTXxrRPYlEIUPICT-katILNO0sp2b3XjVNf1I'; // Remplace cela par le token de ton bot
 
 // Créer une nouvelle instance de client avec l'intent nécessaire
@@ -42,7 +42,7 @@ client.on('messageCreate', message => {
         message.channel.send('Le noir');
     }
     if(message.content === '!lilou') {
-        message.channel.send('La graphiste du serveur ');
+        message.channel.send('La graphiste du serveur et toujours pas diamant');
     }
     if(message.content === '!Marashel') {
         message.channel.send('Bonne question');
@@ -50,7 +50,28 @@ client.on('messageCreate', message => {
     if(message.content === '!eli') {
         message.channel.send('Croix moi, tu veux pas la connaitre');
     }
-    
+      if (message.content === '!help') {
+        // Créer un embed avec la classe MessageEmbed directement
+        const helpEmbed = new EmbedBuilder()
+            .setColor('#7289DA') // Couleur de Discord
+            .setTitle('Liste des commandes')
+            .setDescription('Voici toutes les commandes que tu peux utiliser sur ce bot !')
+            .addFields(
+                { name: '!Slaapy', value: 'DIEU des Femmes', inline: true },
+                { name: '!theoxeu', value: 'Homme aux testicules élastiques', inline: true },
+                // Ajoute les autres commandes ici de la même manière
+                { name: '!Adelaide', value: 'Une artiste aux incroyable talents', inline: true },
+                { name: '!l escalope', value: 'Juste dieu', inline: true },
+                // ...
+                { name: 'Commandes de gestion', value: 'Commandes spéciales pour gérer le bot', inline: false },
+                { name: '!disconnect', value: 'Déconnecte un utilisateur d\'un canal vocal', inline: true },
+                { name: '/createchannel', value: 'Crée un nouveau salon textuel', inline: true },
+                { name: '/createvoicechannel', value: 'Crée un nouveau salon vocal', inline: true }
+            )
+            .setFooter('Utilise ces commandes avec précaution !');
+
+        message.channel.send({ embeds: [helpEmbed] });
+    }
 });
 
 // Événement lors de la réception d'un message
