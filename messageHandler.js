@@ -2,25 +2,29 @@ const { EmbedBuilder } = require('discord.js');
 
 function handleRegularMessages(message) {
     
+  
+    if (message.content.startsWith('!test') && message.mentions.users.size > 0) {
+        let mentionedUser = message.mentions.users.first(); // Récupère le premier utilisateur mentionné
+        message.channel.send(`Tu as mentionné l'utilisateur ${mentionedUser.username}!`);
+        return; // Important pour ne pas continuer après avoir traité cette commande
+    }
+
     const responses = {
         '!Slaapy': 'DIEU des Femmes',
         '!Theoxeu': 'Homme aux testicules élastiques',
         '!Adelaide': 'Une artiste aux incroyable talents',
         '!Sabodia' : 'Juste dieu',
         '!Cupi' : 'Le plus gros fans VITALITY du monde',
-        'Zowkii':  'liste : Pigeon, go muscu, valo addicte, GO PRISON!!!!!!',
-        'Zowkii2':  'liste : Pigeon , go muscu , BDG , accro à valo ,violeur et PEDO , GO PRISON!!!!!!',
-        'Sekai':  'Le noir',
-        'Lilou':  'La graphiste du serveur et toujours pas diamant',
-        'Marashel':  'Bonne question',
-        'Eli':  'Croix moi, tu veux pas la connaitre'
+        '!Zowkii':  'liste : Pigeon, go muscu, valo addicte, GO PRISON!!!!!!',
+        '!Zowkii2':  'liste : Pigeon , go muscu , BDG , accro à valo ,violeur et PEDO , GO PRISON!!!!!!',
+        '!Sekai':  'Le noir',
+        '!Lilou':  'La graphiste du serveur et toujours pas diamant',
+        '!Marashel':  'Bonne question',
+        '!Eli':  'Croix moi, tu veux pas la connaitre'
 
-        // Ajoute ici d'autres commandes et réponses
+      
     };
-    if (message.content.startsWith('!test') && message.mentions.users.size > 0) {
-        let mentionedUser = message.mentions.users.first();  // Récupère le premier utilisateur mentionné
-        message.channel.send(`Tu as mentionné l'utilisateur ${mentionedUser.username}!`);
-    }
+    
     
     if (responses[message.content]) {
         message.channel.send(responses[message.content]);
