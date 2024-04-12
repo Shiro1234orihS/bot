@@ -1,12 +1,25 @@
 const { EmbedBuilder } = require('discord.js');
+const functionSurUtilisateur = require('./fonctionMechante/functionSurUtilisateur');
+
 
 function handleRegularMessages(message) {
     
+    if (message.author.bot) return; // Pour éviter de répondre aux messages d'autres bots ou de lui-même
 
     if (message.content.startsWith('!test') && message.mentions.users.size > 0) {
         let mentionedUser = message.mentions.users.first(); // Récupère le premier utilisateur mentionné
         message.channel.send(`Tu as mentionné l'utilisateur ${mentionedUser.username}!`);
         return; // Important pour ne pas continuer après avoir traité cette commande
+    }
+
+    if(message.content.startsWith('!disconect') && message.mentions.users.size > 0) {
+
+        console.log('test');
+        functionSurUtilisateur.disconnect(message); // Appel correct de disconnect
+       
+    }
+    else{
+        message.channel.send("Attention tu as pas mentionné d'utilisateur...")
     }
 
     const responses = {
@@ -20,7 +33,7 @@ function handleRegularMessages(message) {
         '!Sekai':  'Le noir',
         '!Lilou':  'La graphiste du serveur et toujours pas diamant',
         '!Marashel':  'Bonne question',
-        '!Eli':  'Croix moi, tu veux pas la connaitre'
+        '!Eli':  'Croix moi, tu veux pas la connaitre',
     };
     
     
@@ -29,39 +42,7 @@ function handleRegularMessages(message) {
     }
 };
 
-async function  disconnect(message){
-    
-    if (message.author.bot) return; // Pour éviter de répondre aux messages d'autres bots ou de lui-même
 
-    // Initialise member comme l'expéditeur du message
-    let member = message.member;
-    let test = false;
-
-    // Vérifie si un utilisateur est mentionné dans le message
-    if (message.mentions.users.size > 0) {
-        // Obtenir l'ID de l'utilisateur mentionné
-        let mentionedUser = message.mentions.users.first();
-        console.log(mentionedUser);
-    }
-
-    // Vérifier si le membre (mentionné ou non) est dans un canal vocal
-    if (mentionedUser.voice.channel && test) {
-        try {
-            console.log("test")
-            // Déconnecter le membre du canal vocal
-           // await mentionedUser.voice.disconnect('Déconnexion demandée par la commande');
-            message.channel.send(`${mentionedUser.displayName} a été déconnecté du canal vocal.`);
-        } catch (error) {
-            console.error(error);
-            message.channel.send("Je n'ai pas la permission de faire cela!");
-        }
-    } 
-    else {
-        // Informer si le membre n'est pas dans un canal vocal
-        message.channel.send(`${member.displayName} n'est pas dans un canal vocal!`);
-    }
-        
-};
 
 function handleHelpCommand(message) {
 
@@ -119,9 +100,6 @@ module.exports = message => {
     switch (message.content) {
         case '!help':
             handleHelpCommand(message);
-            break;
-        case '!disconect' : 
-            disconnect(message);
             break;
         default:
             handleRegularMessages(message);
