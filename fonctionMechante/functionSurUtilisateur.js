@@ -47,7 +47,6 @@ async function ban(message) {
         member.ban().then(() => {
             message.channel.send(`L'utilisateur ${userToBan.tag} a été banni.`);
         }).catch(err => {
-            console.error(err);
             message.channel.send('Je n\'ai pas les permissions nécessaires pour bannir cet utilisateur.');
         });
 
