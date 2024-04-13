@@ -23,7 +23,7 @@ function handleRegularMessages(message) {
             else
                 message.channel.send("Tu m'as pris pour un con")
             return;
-        }else
+        }else if(message.content.startsWith('!ban'))
             message.channel.send("Tu as pas les droits pour ban des gens")
     
         if(message.content.startsWith('!disconect') && message.mentions.users.size > 0) {

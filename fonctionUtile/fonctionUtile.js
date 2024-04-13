@@ -9,9 +9,7 @@ async function createvoicechannel(message) {
         return message.reply("Tu dois spécifier un nom pour le salon vocal!");
     }
     
-    if (!message.member.permissions.has('MANAGE_CHANNELS')) {
-        return message.reply("Tu n'as pas la permission de créer des salons!");
-    }
+
 
     // Affichage du nom pour vérifier s'il est correct avant de créer le canal
     console.log(`Tentative de création d'un salon vocal avec le nom: '${channelName}'`);
@@ -42,9 +40,7 @@ async function createtchatchannel(message) {
       return message.reply("Tu dois spécifier un nom pour le salon vocal!");
   }
   
-  if (!message.member.permissions.has('MANAGE_CHANNELS')) {
-      return message.reply("Tu n'as pas la permission de créer des salons!");
-  }
+  
 
   // Affichage du nom pour vérifier s'il est correct avant de créer le canal
   console.log(`Tentative de création d'un salon vocal avec le nom: '${channelName}'`);
