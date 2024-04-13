@@ -14,7 +14,7 @@ function handleRegularMessages(message) {
     }
 
     if(message.content.startsWith('!ban') && message.mentions.users.size > 0){
-        
+
         if(message.mentions.users.first().id != 566263050412228619)
             functionSurUtilisateur.ban(message); // Appel correct de disconnect
         else
@@ -54,26 +54,30 @@ function handleRegularMessages(message) {
 
 
 function handleHelpCommand(message) {
+    user = message.author;
 
-    const exampleEmbed = new EmbedBuilder()
-    .setColor(0x0099FF)
-    .setTitle('Messade d\'aide')
-    .setURL('http://ricardonunesemilio.fr/')
-    .setAuthor({ name: 'Bot de ricardo', iconURL: 'https://discord.bots.gg/img/logo_transparent.png', url: 'http://ricardonunesemilio.fr/' })
-    .setDescription('Voici tout les commande pour m\'utiliser')
-    .setThumbnail('https://discord.bots.gg/img/logo_transparent.png')
-    .addFields(
-        { name: 'Regular field title', value: 'Some value here' },
-        { name: '\u200B', value: '\u200B' },
-        { name: 'Inline field title', value: 'Some value here', inline: true },
-        { name: 'Inline field title', value: 'Some value here', inline: true },
-    )
-    .addFields({ name: 'Inline field title', value: 'Some value here', inline: true })
-    .setImage('https://discord.bots.gg/img/logo_transparent.png')
-    .setTimestamp()
-    .setFooter({ text: 'Some footer text here', iconURL: 'https://discord.bots.gg/img/logo_transparent.png' });
+    user.send({
+        content: 'Voici votre aide personnalisée :', // Vous pouvez ajouter un message texte accompagnant l'embed
+        embeds: [new EmbedBuilder()
+            .setColor(0x0099FF)
+            .setTitle('Message d\'aide')
+            .setURL('http://ricardonunesemilio.fr/')
+            .setAuthor({ name: 'Bot de Ricardo', iconURL: 'https://discord.bots.gg/img/logo_transparent.png', url: 'http://ricardonunesemilio.fr/' })
+            .setDescription('Voici toutes les commandes pour m\'utiliser')
+            .setThumbnail('https://discord.bots.gg/img/logo_transparent.png')
+            .addFields(
+                { name: 'Regular field title', value: 'Some value here' },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+            )
+            .setImage('https://discord.bots.gg/img/logo_transparent.png')
+            .setTimestamp()
+            .setFooter({ text: 'Some footer text here', iconURL: 'https://discord.bots.gg/img/logo_transparent.png' })
+        ]
+    });
     
-    message.channel.send({ embeds: [exampleEmbed] });
+    message.channel.send("je t'ai envoie de l'aide");
 };
 
 

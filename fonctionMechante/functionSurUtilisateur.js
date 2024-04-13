@@ -9,7 +9,6 @@ async function  disconnect(message){
     // Vérifier si le membre (mentionné ou non) est dans un canal vocal
     if (mentionedUser && mentionedUser.voice && mentionedUser.voice.channel) {
         try {
-           
             // Déconnecter le membre du canal vocal
             await mentionedUser.voice.disconnect('Déconnexion demandée par la commande');
             message.channel.send(`${mentionedUser.displayName} a été déconnecté du canal vocal.`);
@@ -25,6 +24,7 @@ async function  disconnect(message){
      
     console.log("on est la")
 };
+
 async function ban(message) {
     try {
         // Récupération du premier utilisateur mentionné
