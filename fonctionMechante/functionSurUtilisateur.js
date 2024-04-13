@@ -1,29 +1,30 @@
-async function  disconnect(message){
-    
-    let member = message.member;
-    let mentionedUser = message.mentions.users.first(); // Récupère le premier utilisateur mentio
+async function disconnect(message) {
+    // Récupère le premier utilisateur mentionné
+    const mentionedUser = message.mentions.users.first();
 
-    console.log(message.mentions.users.first());
-    
-    
-    // Vérifier si le membre (mentionné ou non) est dans un canal vocal
-    if (mentionedUser && mentionedUser.voice && mentionedUser.voice.channel) {
+    if (!mentionedUser) {
+        message.channel.send('Aucun utilisateur mentionné.');
+        return;
+    }
+
+    // Récupérer le membre du serveur correspondant à l'utilisateur mentionné
+    const member = await message.guild.members.fetch(mentionedUser.id);
+
+    // Vérifier si le membre est dans un canal vocal
+    if (member.voice.channel) {
         try {
             // Déconnecter le membre du canal vocal
-            await mentionedUser.voice.disconnect('Déconnexion demandée par la commande');
-            message.channel.send(`${mentionedUser.displayName} a été déconnecté du canal vocal.`);
+            await member.voice.disconnect('Déconnexion demandée par la commande');
+            message.channel.send(`${member.displayName} a été déconnecté du canal vocal.`);
         } catch (error) {
             console.error(error);
             message.channel.send("Je n'ai pas la permission de faire cela!");
         }
-    } 
-    else {
+    } else {
         // Informer si le membre n'est pas dans un canal vocal
-        message.channel.send(`${mentionedUser.displayName} n'est pas dans un canal vocal!`);
+        message.channel.send(`${member.displayName} n'est pas dans un canal vocal!`);
     }
-     
-    console.log("on est la")
-};
+}
 
 async function ban(message) {
     try {
