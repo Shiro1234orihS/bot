@@ -6,30 +6,30 @@ function handleRegularMessages(message) {
     
     if (message.author.bot) return; // Pour éviter de répondre aux messages d'autres bots ou de lui-même
 
-    if (message.content.startsWith('!test') && message.mentions.users.size > 0) {
+    if(message.mentions.users.size > 0){
 
-        let mentionedUser = message.mentions.users.first(); // Récupère le premier utilisateur mentionné
-        message.channel.send(`Tu as mentionné l'utilisateur ${mentionedUser.username}!`);
-        return; // Important pour ne pas continuer après avoir traité cette commande
+        if (message.content.startsWith('!test') ) {
+
+            let mentionedUser = message.mentions.users.first(); // Récupère le premier utilisateur mentionné
+            message.channel.send(`Tu as mentionné l'utilisateur ${mentionedUser.username}!`);
+            return; // Important pour ne pas continuer après avoir traité cette commande
+        }
+    
+        if(message.content.startsWith('!ban')  ){
+    
+            if(message.mentions.users.first().id != 566263050412228619)
+                functionSurUtilisateur.ban(message); // Appel correct de disconnect
+            else
+                message.channel.send("Tu m'as pris pour un con")
+            return;
+        }
+    
+        if(message.content.startsWith('!disconect') && message.mentions.users.size > 0) {
+            functionSurUtilisateur.disconnect(message); // Appel correct de disconnect
+            return;
+        }
     }
-
-    if(message.content.startsWith('!ban') && message.mentions.users.size > 0){
-
-        if(message.mentions.users.first().id != 566263050412228619)
-            functionSurUtilisateur.ban(message); // Appel correct de disconnect
-        else
-            message.channel.send("Tu m'as pris pour un con")
-        return;
-    }
-
-    if(message.content.startsWith('!disconect') && message.mentions.users.size > 0) {
-
-        console.log('test');
-        functionSurUtilisateur.disconnect(message); // Appel correct de disconnect
-       
-    }else if(message.content.startsWith('!disconect')){
-        message.channel.send("Attention tu as pas mentionné d'utilisateur...")
-    }
+    
 
     const responses = {
         '!Slaapy': 'DIEU des Femmes',

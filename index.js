@@ -19,8 +19,6 @@ const client = new Client({
 client.on('messageCreate', messageHandler);
 
 
- // Événement lors de la réception d'un message
-client.on('messageCreate', async message => {});
 
 
 client.on('messageCreate', async message => {
