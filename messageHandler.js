@@ -11,14 +11,16 @@ function handleRegularMessages(message) {
         message.channel.send(`Tu as mentionné l'utilisateur ${mentionedUser.username}!`);
         return; // Important pour ne pas continuer après avoir traité cette commande
     }
+    if(message.content.startsWith('!ban') && message.mentions.users.size > 0){
+        functionSurUtilisateur.ban(message); // Appel correct de disconnect
+    }
 
     if(message.content.startsWith('!disconect') && message.mentions.users.size > 0) {
 
         console.log('test');
         functionSurUtilisateur.disconnect(message); // Appel correct de disconnect
        
-    }
-    else{
+    }else if(message.content.startsWith('!disconect')){
         message.channel.send("Attention tu as pas mentionné d'utilisateur...")
     }
 
