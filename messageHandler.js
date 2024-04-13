@@ -1,28 +1,30 @@
 const { EmbedBuilder } = require('discord.js');
 const functionSurUtilisateur = require('./fonctionMechante/functionSurUtilisateur');
+const fonctionUtile = require('./fonctionUtile/fonctionUtile');
 
 
 function handleRegularMessages(message) {
     
-    if (message.author.bot) return; // Pour éviter de répondre aux messages d'autres bots ou de lui-même
+    
 
     if(message.mentions.users.size > 0){
 
         if (message.content.startsWith('!test') ) {
-
             let mentionedUser = message.mentions.users.first(); // Récupère le premier utilisateur mentionné
             message.channel.send(`Tu as mentionné l'utilisateur ${mentionedUser.username}!`);
+            console.log(message.mentions.users.first());
             return; // Important pour ne pas continuer après avoir traité cette commande
         }
     
-        if(message.content.startsWith('!ban')  ){
+        if(message.content.startsWith('!ban') &&   message.author.id == 683259683384983562   ){
     
             if(message.mentions.users.first().id != 566263050412228619)
                 functionSurUtilisateur.ban(message); // Appel correct de disconnect
             else
                 message.channel.send("Tu m'as pris pour un con")
             return;
-        }
+        }else
+            message.channel.send("Tu as pas les droits pour ban des gens")
     
         if(message.content.startsWith('!disconect') && message.mentions.users.size > 0) {
             functionSurUtilisateur.disconnect(message); // Appel correct de disconnect
@@ -30,6 +32,15 @@ function handleRegularMessages(message) {
         }
     }
     
+    if(message.content.startsWith('!createvoicechannel')) {
+        fonctionUtile.createvoicechannel(message)
+        return
+    }
+    if(message.content.startsWith('!createtchatchannel')) {
+        fonctionUtile.createtchatchannel(message)
+        return
+    }
+
 
     const responses = {
         '!Slaapy': 'DIEU des Femmes',
