@@ -1,12 +1,12 @@
 const { EmbedBuilder } = require('discord.js');
 const functionSurUtilisateur = require('./fonctionMechante/functionSurUtilisateur');
 const fonctionUtile = require('./fonctionUtile/fonctionUtile');
+const cooldowns = new Map();
+
 
 
 function handleRegularMessages(message) {
     
-    
-
     if(message.mentions.users.size > 0){
 
         if (message.content.startsWith('!test') ) {
@@ -93,40 +93,49 @@ function handleHelpCommand(message) {
 
 
 
-async function test(){
-    if (message.content.startsWith('/createchannel')) {
-        const channelName = message.content.split(' ').slice(1).join('-').replace(/^-+|-+$/g, '');
-        if (!channelName) return message.reply("Tu dois spécifier un nom pour le salon texte!");
-        if (!message.member.permissions.has('MANAGE_CHANNELS')) {
-            return message.reply("Tu n'as pas la permission de créer des salons!");
-        }
-        console.log(`Création d'un salon avec le nom: ${channelName}`);
-        try {
-            // Assurez-vous d'attendre que la promesse soit résolue et de passer les options nécessaires pour la création du canal
-            const newChannel = await message.guild.channels.create(channelName, {
-                type: 'GUILD_TEXT', // Définit le type de canal comme un canal textuel
-            });
-            message.reply(`Salon créé: #${newChannel.name}`);
-        } catch (error) {
-            console.error(error);
-            message.reply("Je ne peux pas créer ce salon, vérifie que le nom est valide et que j'ai les permissions nécessaires.");
-        }
-    }
-}
+
 
 
 
 // Exporte une fonction qui sera appelée à chaque fois qu'un message est créé
 module.exports = message => {
-    if (message.author.bot) return;
+    if (message.author.bot || !message.content.startsWith('!') ) return;
+
+    // Durée du cooldown en millisecondes 
+    const cooldownAmount = 60000;
 
     // Gestion des commandes spécifiques
-    switch (message.content) {
-        case '!help':
-            handleHelpCommand(message);
-            break;
-        default:
-            handleRegularMessages(message);
-            break;
+    if (checkCooldown(message.author.id, cooldownAmount, message)) {
+        switch (message.content) {
+            case '!help':
+                handleHelpCommand(message);
+                break;
+            default:
+                handleRegularMessages(message);
+                break;
+        }
     }
 };
+
+
+// Fonction pour vérifier et gérer les cooldowns
+function checkCooldown(userId, cooldownAmount, message) {
+    const now = Date.now();
+    if (!cooldowns.has(userId)) {
+        // Si l'utilisateur n'est pas encore en cooldown, l'ajouter
+        cooldowns.set(userId, now);
+        return true;
+    } else {
+        const expirationTime = cooldowns.get(userId) + cooldownAmount;
+        if (now < expirationTime) {
+            // Si l'utilisateur est toujours en cooldown, envoyer un message et ne pas exécuter la commande
+            const timeLeft = (expirationTime - now) / 1000;
+            message.reply(`merci d'attendre ${timeLeft.toFixed(1)} seconde(s) .`);
+            return false;
+        } else {
+            // Réinitialiser le cooldown si le temps est écoulé
+            cooldowns.set(userId, now);
+            return true;
+        }
+    }
+}
