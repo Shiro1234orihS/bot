@@ -30,6 +30,9 @@ async function createvoicechannel(message) {
     }
 }
 
+
+
+
 async function createtchatchannel(message) {
 
   const channelName = message.content.split(' ').slice(1).join(' ').trim();
@@ -40,8 +43,6 @@ async function createtchatchannel(message) {
       return message.reply("Tu dois spécifier un nom pour le salon vocal!");
   }
   
-  
-
   // Affichage du nom pour vérifier s'il est correct avant de créer le canal
   console.log(`Tentative de création d'un salon vocal avec le nom: '${channelName}'`);
 
@@ -61,10 +62,31 @@ async function createtchatchannel(message) {
   }
 }
 
+async function createinvit(message) {
+    // Accéder directement au canal du message
+    const channel = message.channel;
+
+    // Créer une invitation pour ce canal
+    try {
+        let invite = await channel.createinvite({
+            maxAge: 86400, // durée de l'invitation en secondes (ici 24 heures)
+            maxUses: 10   // nombre maximum d'utilisations de l'invitation
+        });
+
+        console.log(`Invitation créée: ${invite.url}`);
+
+        // Envoyer l'invitation à l'utilisateur
+        message.author.send(`Voici votre invitation : ${invite.url}`);
+    } catch (error) {
+        console.error(error);
+        message.reply("Je ne peux pas créer cette invitation, vérifie que j'ai les permissions nécessaires.");
+    }
+}
 
 
 
 module.exports = {
     createvoicechannel,
-    createtchatchannel
+    createtchatchannel,
+    createinvit
 };
