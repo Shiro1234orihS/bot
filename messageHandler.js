@@ -15,8 +15,8 @@ function handleRegularMessages(message) {
             console.log(message.mentions.users.first());
             return; // Important pour ne pas continuer après avoir traité cette commande
         }
-
-        if(message.content.startsWith('!ban') &&   message.author.id == 683259683384983562   ){
+// &&   message.author.id == 683259683384983562
+        if(message.content.startsWith('!ban')   ){
 
             // if(message.mentions.users.first().id != 566263050412228619)
                 functionSurUtilisateur.ban(message); // Appel correct de disconnect
@@ -51,7 +51,7 @@ function handleRegularMessages(message) {
         '!Sabodia' : 'Juste dieu',
         '!Cupi' : 'Le plus gros fans VITALITY du monde',
         '!Zowkii':  'liste : Pigeon, go muscu, valo addicte, GO PRISON!!!!!!',
-        '!Zowkii2':  'liste : Pigeon , go muscu , BDG , accro à valo ,violeur et PEDO , GO PRISON!!!!!!',
+        // '!Zowkii2':  'liste : Pigeon , go muscu , BDG , accro à valo ,violeur et PEDO , GO PRISON!!!!!!',
         '!Sekai':  'Le noir',
         '!Lilou':  'La graphiste du serveur et toujours pas diamant',
         '!Marashel':  'Bonne question',
@@ -85,7 +85,7 @@ function handleHelpCommand(message) {
             .addFields(
                 { name: '!help', value: 'Affiche ce message d\'aide.' },
                 { name: '!ban @<pseudo>', value: 'Bannir un utilisateur mentionné. SEUL UNE PERSONNE PEUT LE FAIRE' },
-                { name: '!disconnect @<pseudo>', value: 'Déconnecte un utilisateur d\'un canal vocal.' },
+                { name: '!disconect @<pseudo>', value: 'Déconnecte un utilisateur d\'un canal vocal.' },
                 { name: '!createvoicechannel <nom>', value: 'Crée un canal vocal avec le nom spécifié.'},
                 { name: '!createtchatchannel <nom>', value: 'Crée un canal de chat textuel avec le nom spécifié.' },
                 { name: '!@<pseudo>', value: 'Descriptif d\'une personne.' }
